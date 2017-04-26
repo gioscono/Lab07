@@ -44,8 +44,8 @@ public class DizionarioController {
 		try {
 			int numero = Integer.parseInt(inputNumeroLettere.getText());
 			ArrayList<String> parole = (ArrayList<String>) model.createGraph(numero);
-			
-			txtResult.appendText("PAROLE TROVATE CON LUNGHEZZA "+numero+": "+parole.size()+"\n");
+
+			txtResult.appendText("PAROLE TROVATE CON LUNGHEZZA " + numero + ": " + parole.size() + "\n");
 			txtResult.appendText("Caricato dizionario.\n");
 
 		} catch (RuntimeException re) {
@@ -55,10 +55,10 @@ public class DizionarioController {
 
 	@FXML
 	void doTrovaGradoMax(ActionEvent event) {
-		
+
 		try {
 			String ris = model.findMaxDegree();
-			txtResult.appendText("Vertice con maggior numero di collegamenti: "+ris);
+			txtResult.appendText("Vertice con maggior numero di collegamenti: " + ris);
 
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -67,21 +67,21 @@ public class DizionarioController {
 
 	@FXML
 	void doTrovaVicini(ActionEvent event) {
-		
+
 		try {
 			String parola = inputParola.getText();
-			if(parola.compareTo("")==0 || parola.matches("[0-9]*") || parola.length()!=Integer.parseInt(inputNumeroLettere.getText())){
+			if (parola.compareTo("") == 0 || parola.matches("[0-9]*")
+					|| parola.length() != Integer.parseInt(inputNumeroLettere.getText())) {
 				txtResult.appendText("Parola non valida.\n");
 				return;
-			}
-			else{
+			} else {
 				ArrayList<String> vicini = (ArrayList<String>) model.displayNeighbours(parola);
-				if(vicini == null){
+				if (vicini == null) {
 					txtResult.appendText("Parola non presente nel dizionario.");
-				}else{
-					txtResult.appendText("La parola "+parola+" e' collegata a:\n");
-					for(String s : vicini){
-						txtResult.appendText(s+"\n");
+				} else {
+					txtResult.appendText("La parola " + parola + " e' collegata a:\n");
+					for (String s : vicini) {
+						txtResult.appendText(s + "\n");
 					}
 				}
 			}
@@ -102,7 +102,7 @@ public class DizionarioController {
 	}
 
 	public void setModel(Model model) {
-		this.model= model;
-		
+		this.model = model;
+
 	}
 }

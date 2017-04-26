@@ -81,5 +81,6 @@ public class Model {
 				ris += Graphs.getOppositeVertex(grafo, e, vertexMax) + "-";
 		}
 		return ris;
+
 	}
 }
