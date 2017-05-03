@@ -2,6 +2,7 @@ package it.polito.tdp.dizionario.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.dizionario.model.Model;
@@ -30,6 +31,9 @@ public class DizionarioController {
 	private Button btnTrovaVicini;
 	@FXML
 	private Button btnTrovaGradoMax;
+	
+	@FXML
+	private Button btnTrovaTuttiVicini;
 
 	@FXML
 	void doReset(ActionEvent event) {
@@ -90,6 +94,31 @@ public class DizionarioController {
 			txtResult.setText(re.getMessage());
 		}
 	}
+	@FXML
+    void doTrovaTuttiVicini(ActionEvent event) {
+
+		try {
+			String parola = inputParola.getText();
+			int lunghezza = parola.length();
+			model.createGraph(lunghezza);
+			List<String> vicini = model.trovaTuttiVicini(parola);
+			txtResult.appendText("NODI RAGGIUNGIBILI:\n");
+			for(String s: vicini){
+				txtResult.appendText(s+"\n");
+			}
+			
+			List<String> viciniManuali = model.trovaTuttiViciniManualmente(parola);
+			txtResult.appendText("NODI RAGGIUNGIBILI MANUALI :\n");
+			for(String s: viciniManuali){
+				txtResult.appendText(s+"\n");
+			}
+			
+		} catch (RuntimeException re) {
+			txtResult.setText(re.getMessage());
+		}
+	}
+	
+	
 
 	@FXML
 	void initialize() {

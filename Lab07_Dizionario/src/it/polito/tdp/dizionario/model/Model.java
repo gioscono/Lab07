@@ -1,12 +1,15 @@
 package it.polito.tdp.dizionario.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 import it.polito.tdp.dizionario.db.WordDAO;
 
@@ -83,4 +86,41 @@ public class Model {
 		return ris;
 
 	}
+
+
+
+	public List<String> trovaTuttiVicini(String parola) {
+		
+		List<String> vicini = new ArrayList<String>();
+				
+		BreadthFirstIterator<String, DefaultEdge> bfi = new  BreadthFirstIterator<String, DefaultEdge>(grafo, parola);
+		
+		while(bfi.hasNext()){
+			vicini.add(bfi.next());
+		}
+			
+		return vicini;
+	}
+
+	public List<String> trovaTuttiViciniManualmente(String parola) {
+		
+		Set<String> daVisitare = new HashSet<String>();
+		Set<String> visitati = new HashSet<String>();
+		
+		daVisitare.add(parola);
+		
+		
+		
+		while(!daVisitare.isEmpty()){
+			String temp = daVisitare.iterator().next();
+			daVisitare.remove(temp);
+			daVisitare.addAll(Graphs.neighborListOf(grafo,temp));
+			daVisitare.removeAll(visitati);
+			visitati.add(temp);
+		}
+		
+		
+		return new ArrayList<String>(visitati);
+	}
+
 }
